@@ -18,6 +18,12 @@ int createInitialStates();
  * @param cycleLength   Total cycle length
  */
 void checkStates(int timer, int cycleLength);
+
+/**
+ * 
+ * Sets the light states based on the internal array
+ * 
+ */
 void setStates();
 
 #endif
