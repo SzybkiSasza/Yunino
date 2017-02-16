@@ -20,6 +20,6 @@ const int RED_PIN = 3;
    @param state State determining how to switch pins
    @param number Traffic light number
 */
-void setColors(lightStates state, int number);
+void setColors(lightState state, int number);
 
 #endif

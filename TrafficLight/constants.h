@@ -9,7 +9,7 @@
  */
 
  // Light states as enum
-enum lightStates
+enum lightState
 {
   GREEN,
   YELLOW,
