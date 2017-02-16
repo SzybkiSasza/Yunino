@@ -1,8 +1,8 @@
 #include <Bridge.h>
 #include "lightSwitcher.h"
 
-void setColors(lightStates state, int number) {
-  int firstPinNo = number * firstPinNo; //  Real first pin position used to calculate pins for given traffic no. number
+void setColors(lightState state, int number) {
+  int firstPinNo = number * SHIFT; //  Real first pin position used to calculate pins for given traffic no. number
 
   switch (state) {
     case YELLOW:
