@@ -38,42 +38,37 @@ void checkStates(int timer, int cycleLength) {
 
     // Get current state information and timings for changing the states
     lightState* currentState = &lightStates[i];
-    const int nextGreenTime = cumulatedTimes[i];
+    const int beginGreenTime = cumulatedTimes[i];
     const int roadTime = LANE_TIMES[i];
 
     // Operate only inside cycle length
     const int cycleTimer = timer % cycleLength;
 
-    // Prepare all the borders
-    const int beginGreenTime = nextGreenTime;
+    // Prepare all the border
+    const int nextGreenTime = beginGreenTime > 0 ? beginGreenTime : cycleLength;
     const int beginYellowTime = beginGreenTime + roadTime - CHANGE_PRETIME;
     const int beginRedTime = (beginGreenTime + roadTime) >= cycleLength ? 0 : (beginGreenTime + roadTime);
-    const int beginRedYellowTime = (beginGreenTime - CHANGE_PRETIME) > 0 ? (beginGreenTime - CHANGE_PRETIME) : cycleLength - CHANGE_PRETIME;
-
-    Serial.println("*****");
-    Serial.println(i);
-    Serial.println(beginGreenTime);
-    Serial.println(roadTime);
-
+    const int beginRedYellowTime = nextGreenTime - CHANGE_PRETIME;
+    
     // Again - strange quirk of C++. String has to be initialized in advance to concatenate an coerce
     String phrase = "[";
     phrase = phrase + "number: " + i + "][time:" + cycleTimer + "] Switching to: "; 
   
     switch(*currentState) {
       case RED:
-        if (cycleTimer >= beginRedYellowTime) {
+        if (cycleTimer >= beginRedYellowTime && cycleTimer <= nextGreenTime) {
           Serial.println(phrase + "RY");
           *currentState = RED_YELLOW;
         }
         break;
       case RED_YELLOW:
-        if (cycleTimer >= beginGreenTime) {
+        if ((beginGreenTime > beginRedYellowTime && cycleTimer >= beginGreenTime) || (beginGreenTime < beginRedYellowTime && cycleTimer <= beginYellowTime)) {
           Serial.println(phrase + "G");
           *currentState = GREEN;
         }
         break;
       case YELLOW:
-        if (cycleTimer >= beginRedTime) {
+        if ((beginRedTime > beginYellowTime && cycleTimer >= beginRedTime) ||(beginRedTime < beginYellowTime && cycleTimer <= beginRedYellowTime)) {
           Serial.println(phrase + "R");
           *currentState = RED;
         }

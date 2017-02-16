@@ -23,13 +23,13 @@ const int TICK_TIME = 50;
 
 // Number of pins to shift for each traffic light. 
 // Means that the next traffic light will start at 4,5,6 then 8,9,10 etc.
-const int SHIFT = 4;
+const int SHIFT = 3;
 
 // Time for which yellow will be shown
 const int CHANGE_PRETIME = 2000;
 
 // Time for "GREEN" for each lane/road, starting with the first traffic light - cutomize here!!!
-const int LANE_TIMES[] = {5 * 1000, 10 * 1000, 5 * 1000};
+const int LANE_TIMES[] = {5 * 1000, 10 * 1000, 5 * 1000, 6 * 1000};
 
 // Computed total number of lights
 const int TRAFFIC_LIGHTS_NO = sizeof(LANE_TIMES) / sizeof(int);
