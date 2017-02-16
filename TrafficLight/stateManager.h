@@ -8,7 +8,16 @@
  *  
  */
 int createInitialStates();
-void checkStates(int timer);
+
+/**
+ * 
+ * Checks the states, based on current time and traffic cycle length
+ * Updates the internal states array that is used to change traffic light colors
+ * 
+ * @param timer         Current cycle time
+ * @param cycleLength   Total cycle length
+ */
+void checkStates(int timer, int cycleLength);
 void setStates();
 
 #endif

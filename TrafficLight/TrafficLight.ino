@@ -43,7 +43,7 @@ void setup() {
  * 
  */
 void loop() {
-  checkStates(timer);
+  checkStates(timer, cycleLength);
   setStates();
 
   delay(TICK_TIME);
