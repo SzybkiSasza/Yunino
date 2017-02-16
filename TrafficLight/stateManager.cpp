@@ -1,12 +1,10 @@
 #include <Bridge.h>
 #include "constants.h"
 #include "stateManager.h"
+#include "lightSwitcher.h"
 
 // Cumulated times - to determine the next change for each light
 int cumulatedTimes[TRAFFIC_LIGHTS_NO] = {0};
-
-// Length of the cycle - to keep the track of when the sequence should start over
-int cycleLength = 0;
 
 // This array keeps the states of the lights in any time. States come from 
 lightStates trafficStates[TRAFFIC_LIGHTS_NO] = {};
@@ -29,8 +27,8 @@ int createInitialStates() {
     cumulatedTimes[i] = (cumulatedTimes[i - 1] + LANE_TIMES[i - 1]);
   }
 
-  cycleLength = cumulatedTimes[TRAFFIC_LIGHTS_NO - 1] + LANE_TIMES[TRAFFIC_LIGHTS_NO - 1];
-
+  // Calculate total cycle length = all the GREEN times.
+  int cycleLength = cumulatedTimes[TRAFFIC_LIGHTS_NO - 1] + LANE_TIMES[TRAFFIC_LIGHTS_NO - 1];
   return cycleLength;
 }
 
@@ -64,11 +62,13 @@ void checkStates(int timer) {
 }
 
 /**
-   Sets crossroads states for all the traffic lights
+ * 
+ * Sets crossroads states for all the traffic lights
+ * 
 */
 void setStates() {
   for (int i = 0; i < TRAFFIC_LIGHTS_NO; i++) {
-    setState(trafficStates[i], i);
+    setColors(trafficStates[i], i);
   }
 }
 
